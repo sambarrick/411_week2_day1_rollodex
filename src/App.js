@@ -1,14 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+import Toggle from './Toggle';
 
-class App extends React.Component {
-  // constructor(props) { 
-  //   super(props);  
+class App extends React.Component { 
   state = { 
       isLoading: true, //take this syntax for granted. Default value for fetch in React for state
-      results: [] //default value showing blank array since we are assuming we haven't written 
-      //any code below
+      results: [], //default value showing blank array since we are assuming we haven't written any code below
+      
     }
   
 
@@ -18,13 +17,14 @@ class App extends React.Component {
   fetchData() {
     fetch ('https://randomuser.me/api?results=25') //take this synxtax for granted
     .then(response => response.json()) //take this synxtax for granted
-    .then(parsedJSON => parsedJSON.results.map(result => ({ //take this synxtax for granted. Map runs through all options
-      //IMPORTANT**: All "beer" does is establish the baseline for dot notation. I changed the word to bee and it does the same thing.
-      //It is not specific term needing to be used, you can use anything. Beer, essentially, is your starter
-      //word to accessing specific terms you do need, like name, iby, abv, etc.
+    .then(parsedJSON => parsedJSON.results.map(result => ({ 
       name: `${result.name.first} ${result.name.last}`,
-      thumbnail: `${result.picture.thumbnail}`,
-      phonenumber: `${result.phone}`
+      thumbnail: `${result.picture.large}`,
+      phonenumber: `${result.phone}`,
+      address: `${result.location.street.number} ${result.location.street.name}`,
+      location: `${result.location.city} ${result.location.state} ${result.location.country} ${result.location.postcode}`,
+      email: `${result.email}`,
+      username: `${result.login.username}`
     })))
   
     .then(results => 
@@ -33,29 +33,36 @@ class App extends React.Component {
       isLoading: false //take this syntax for granted. Default value for fetch in React for setState
     }))
 
-    .catch(error => console.log("parsing failed", error)) //take this syntax for granted. It catches errors
+    .catch(error => console.log("Could not parse correctly", error)) //take this syntax for granted. It catches errors
     //if the code doesn't load right.
 
     }
     render() {
       const {isLoading, results} = this.state;
       return (
-        <div className="whole-page">
-          <header>Rollodex</header>
-        
-         <div className={`content ${isLoading ? 'is-loading' : ''}`}> {/*comment take this line for granted here*/}
-            <div className="rollodex-info">
+      
+        <div>
+          <header>Address BookRollodex</header>
+     
+         <div className={`content ${isLoading ? 'is-loading' : ''}`}> 
+            <div>
               {
                
                 !isLoading && results.length > 0 ? results.map(result => { //take this line for granted
-                  const {name, thumbnail, phonenumber} = result; //take this line for granted
+                  const {name, thumbnail, phonenumber, address, location, email, username} = result; //take this line for granted
                   return <div key={result} title={name}> {/*take this line for granted */}
-                    <p className="name-line">{name} <button>Details</button> </p>
-                    <img src={thumbnail}/> 
-                    <p className="phonenumber-line">{phonenumber}</p>
+                    <p id="name">{name}</p> 
+                    <img src={thumbnail}/>
+                    <Toggle>
+                    <p><span>Phone Number: </span> {phonenumber}</p>
+                    <p> <span>Address: </span>{address}</p>
+                    <p><span>Location: </span>{location}</p>
+                    <p><span>Email: </span>{email}</p>
+                    <p><span>Username: </span>{username}</p>
+                    </Toggle>
                     <br></br>
                     </div>
-                }) : null //take this line for granted
+                }) : null
               }
             </div>
           </div>
@@ -67,6 +74,3 @@ class App extends React.Component {
 
 
 export default App;
-
-
-// use isHidden for showing photos and such
