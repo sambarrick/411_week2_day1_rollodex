@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background-color: lightblue;
 }
 
 header{
@@ -30,6 +31,3 @@ span {
   -webkit-text-stroke: .40px black;
 }
 
-body{
-  background-color: lightblue;
-}
