@@ -15,11 +15,6 @@ export default class Toggle extends Component {
     const newState = !this.state.on
         this.setState({on:newState})
    }
-
-   changeText = () => {
-    const newState = !this.state.switch
-    this.setState({ switch:newState }); 
-  } 
   
     render() {
 
