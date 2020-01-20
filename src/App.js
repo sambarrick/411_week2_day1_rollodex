@@ -7,7 +7,7 @@ class App extends React.Component {
   state = { 
       isLoading: true, //take this syntax for granted. Default value for fetch in React for state
       results: [], //default value showing blank array since we are assuming we haven't written any code below
-      
+
     }
   
 
@@ -42,7 +42,7 @@ class App extends React.Component {
       return (
       
         <div>
-          <header>Address BookRollodex</header>
+          <header>Address Book Rollodex</header>
      
          <div className={`content ${isLoading ? 'is-loading' : ''}`}> 
             <div>
